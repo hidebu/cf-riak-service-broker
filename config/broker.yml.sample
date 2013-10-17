@@ -1,0 +1,8 @@
+username: "admin"
+password: "admin"
+riak_servers:
+  - "http://localhost:10018"
+  - "http://localhost:10028"
+  - "http://localhost:10038"
+  - "http://localhost:10048"
+  - "http://localhost:10058"
