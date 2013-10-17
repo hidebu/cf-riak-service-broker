@@ -12,7 +12,7 @@ module RiakBroker
       {
         "services" => [
           "id" => RIAK_SERVICE_ID,
-          "name" => "Riak",
+          "name" => "riak",
           "description" => "An open source, distributed key/value store.",
           "bindable" => true,
           "plans" => [
