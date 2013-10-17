@@ -8,5 +8,6 @@ end
 
 run Rack::URLMap.new({
   "/v2/catalog"            => RiakBroker::Catalog,
-  "/v2/service_instances"  => RiakBroker::ServiceInstances
+  "/v2/service_instances"  => RiakBroker::ServiceInstances,
+  "/v2/service_bindings"   => RiakBroker::ServiceBindings
 })
