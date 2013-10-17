@@ -1,5 +1,3 @@
-require "json"
-
 module RiakBroker
   class ServiceInstances < Sinatra::Base
     SERVICE_INSTANCES = { }

@@ -1,4 +1,5 @@
 require "yaml"
+require "json"
 
 ENV["RACK_ENV"] ||= "development"
 
