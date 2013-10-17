@@ -1,5 +1,3 @@
-require "json"
-
 module RiakBroker
   RIAK_SERVICE_ID = "084d6148-3b0e-4c36-a229-401d9b8982bd"
   BITCASK_PLAN_ID = "dc97f6e9-799f-4c33-9a9a-0336fb056068"
@@ -14,7 +12,7 @@ module RiakBroker
       {
         "services" => [
           "id" => RIAK_SERVICE_ID,
-          "name" => "Riak",
+          "name" => "riak",
           "description" => "An open source, distributed key/value store.",
           "bindable" => true,
           "plans" => [
