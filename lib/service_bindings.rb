@@ -21,7 +21,7 @@ module RiakBroker
 
     put "/:id" do
       binding_id = params[:id]
-      service_id = JSON.parse(request.body.read)[:service_instance_id]
+      service_id = JSON.parse(request.body.read)["service_instance_id"]
 
       unless already_bound?(binding_id)
         bucket_uuid = SecureRandom.uuid

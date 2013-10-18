@@ -22,7 +22,7 @@ module RiakBroker
 
     put "/:id" do
       service_id  = params[:id]
-      plan_id     = JSON.parse(request.body.read)[:plan_id]
+      plan_id     = JSON.parse(request.body.read)["plan_id"]
 
       unless already_provisioned?(service_id)
         add_service(service_id, plan_id)
