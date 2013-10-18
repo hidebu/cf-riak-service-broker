@@ -1,7 +1,7 @@
 module RiakBroker
-  class ServiceInstances < Sinatra::Base
-    SERVICE_INSTANCES = { }
+  SERVICE_INSTANCES = { }
 
+  class ServiceInstances < Sinatra::Base
     before do
       content_type "application/json"
     end

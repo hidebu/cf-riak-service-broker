@@ -1,13 +1,35 @@
-module RiakBroker
-  class ServiceBindings < Sinatra::Base
-    SERVICE_BINDINGS = { }
+require "rest_client"
 
+module RiakBroker
+  SERVICE_BINDINGS = { }
+
+  class ServiceBindings < Sinatra::Base
     before do
       content_type "application/json"
     end
 
     helpers do
-      def create_binding(binding_id, service_id)
+      def set_backend_bucket_prop(backend, bucket_uuid)
+        bucket_props = { "props" => { "backend" => backend } }
+
+        RestClient.put(
+          "http://#{CONFIG["riak_hosts"].sample}:8098/buckets/#{bucket_uuid}/props",
+          bucket_props.to_json,
+          content_type: :json,
+          accept: :json
+        )
+      end
+
+      def set_backend(plan_id, bucket_uuid)
+        if plan_id == BITCASK_PLAN_ID
+          set_backend_bucket_prop("bitcask_mult", bucket_uuid)
+        elsif plan_id == LEVELDB_PLAN_ID
+          set_backend_bucket_prop("eleveldb_mult", bucket_uuid)
+        end
+      end
+
+      def create_binding(binding_id, service_id, bucket_uuid)
+        set_backend(SERVICE_INSTANCES[service_id], bucket_uuid)
         SERVICE_BINDINGS[binding_id] = service_id
       end
 
@@ -26,7 +48,7 @@ module RiakBroker
       unless already_bound?(binding_id)
         bucket_uuid = SecureRandom.uuid
 
-        create_binding(binding_id, service_id)
+        create_binding(binding_id, service_id, bucket_uuid)
         status 201
 
         {

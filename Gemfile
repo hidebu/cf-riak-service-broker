@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 gem "sinatra", "~> 1.4.3"
+gem "rest-client", "~> 1.6.7", require: "rest_client"
 
 group :test do
   gem "rack-test", "~> 0.6.2", require: "rack/test"
