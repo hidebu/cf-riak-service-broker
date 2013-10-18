@@ -1,7 +1,7 @@
 module RiakBroker
-  class ServiceInstances < Sinatra::Base
-    SERVICE_INSTANCES = { }
+  SERVICE_INSTANCES = { }
 
+  class ServiceInstances < Sinatra::Base
     before do
       content_type "application/json"
     end
@@ -22,7 +22,7 @@ module RiakBroker
 
     put "/:id" do
       service_id  = params[:id]
-      plan_id     = JSON.parse(request.body.read)[:plan_id]
+      plan_id     = JSON.parse(request.body.read)["plan_id"]
 
       unless already_provisioned?(service_id)
         add_service(service_id, plan_id)
