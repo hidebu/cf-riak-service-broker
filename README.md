@@ -1,5 +1,7 @@
 # Riak Service Broker for Cloud Foundry
 
+_This code works, but it's new. Proceed with caution and please tell us when it breaks._
+
 This is a Riak service broker for the Cloud Foundry [v2 services](https://github.com/cloudfoundry/cf-docs/tree/services_v2) API. Documentation for the v2 services API can be found [here](https://docs.google.com/document/d/1qXnEI0pfTs_nUq4w4iMr3RHknLYgFDTYvOe76hugg28/edit#heading=h.1ov8gjl5iza6).
 
 The Riak service broker provides a Riak endpoint, in the form of a bucket, to your Cloud Foundry application. In other words, it lets you use Riak through Cloud Foundry. 
