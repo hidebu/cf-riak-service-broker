@@ -43,7 +43,7 @@ For reference, here are the snippets you'll need to add the `riak_kv` section of
         {<<"bitcask_mult">>,  riak_kv_bitcask_backend, [
         ]},
         {<<"eleveldb_mult">>, riak_kv_eleveldb_backend, [
-        ]},
+        ]}
     ]},
     %% ...
 ]},
