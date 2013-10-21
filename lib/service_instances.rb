@@ -27,14 +27,11 @@ module RiakBroker
       end
 
       def add_service(service_id, plan_id)
-        bucket_uuid = SecureRandom.uuid
-
         SERVICE_INSTANCES[service_id] = {
           plan_id: plan_id,
-          bucket_uuid: bucket_uuid
         }
 
-        set_backend(plan_id, bucket_uuid)
+        set_backend(plan_id, service_id)
       end
 
       def remove_service(service_id)

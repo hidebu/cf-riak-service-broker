@@ -9,10 +9,6 @@ describe RiakBroker::ServiceBindings do
     @app ||= RiakBroker::ServiceBindings
   end
 
-  before(:each) do
-    app.any_instance.stub(:get_bucket_uuid).and_return(bucket_uuid)
-  end
-
   context "PUT /:id" do
     before(:each) do
       put(
