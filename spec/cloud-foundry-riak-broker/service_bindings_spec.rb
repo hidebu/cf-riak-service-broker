@@ -3,9 +3,14 @@ require "spec_helper"
 describe RiakBroker::ServiceBindings do
   let(:binding_uuid) { SecureRandom.uuid }
   let(:service_instance_uuid) { SecureRandom.uuid }
+  let(:bucket_uuid) { SecureRandom.uuid }
 
   def app
     @app ||= RiakBroker::ServiceBindings
+  end
+
+  before(:each) do
+    app.any_instance.stub(:get_bucket_uuid).and_return(bucket_uuid)
   end
 
   context "PUT /:id" do

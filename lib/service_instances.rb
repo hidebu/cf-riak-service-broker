@@ -7,8 +7,34 @@ module RiakBroker
     end
 
     helpers do
+      def set_backend_bucket_prop(backend, bucket_uuid)
+        bucket_props = { "props" => { "backend" => backend } }
+
+        RestClient.put(
+          "http://#{CONFIG["riak_hosts"].sample}:8098/buckets/#{bucket_uuid}/props",
+          bucket_props.to_json,
+          content_type: :json,
+          accept: :json
+        )
+      end
+
+      def set_backend(plan_id, bucket_uuid)
+        if plan_id == BITCASK_PLAN_ID
+          set_backend_bucket_prop("bitcask_mult", bucket_uuid)
+        elsif plan_id == LEVELDB_PLAN_ID
+          set_backend_bucket_prop("eleveldb_mult", bucket_uuid)
+        end
+      end
+
       def add_service(service_id, plan_id)
-        SERVICE_INSTANCES[service_id] = plan_id
+        bucket_uuid = SecureRandom.uuid
+
+        SERVICE_INSTANCES[service_id] = {
+          plan_id: plan_id,
+          bucket_uuid: bucket_uuid
+        }
+
+        set_backend(plan_id, bucket_uuid)
       end
 
       def remove_service(service_id)

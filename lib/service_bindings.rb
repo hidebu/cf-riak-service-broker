@@ -9,27 +9,11 @@ module RiakBroker
     end
 
     helpers do
-      def set_backend_bucket_prop(backend, bucket_uuid)
-        bucket_props = { "props" => { "backend" => backend } }
-
-        RestClient.put(
-          "http://#{CONFIG["riak_hosts"].sample}:8098/buckets/#{bucket_uuid}/props",
-          bucket_props.to_json,
-          content_type: :json,
-          accept: :json
-        )
+      def get_bucket_uuid(service_id)
+        SERVICE_INSTANCES[service_id][:bucket_uuid]
       end
 
-      def set_backend(plan_id, bucket_uuid)
-        if plan_id == BITCASK_PLAN_ID
-          set_backend_bucket_prop("bitcask_mult", bucket_uuid)
-        elsif plan_id == LEVELDB_PLAN_ID
-          set_backend_bucket_prop("eleveldb_mult", bucket_uuid)
-        end
-      end
-
-      def create_binding(binding_id, service_id, bucket_uuid)
-        set_backend(SERVICE_INSTANCES[service_id], bucket_uuid)
+      def create_binding(binding_id, service_id)
         SERVICE_BINDINGS[binding_id] = service_id
       end
 
@@ -42,13 +26,12 @@ module RiakBroker
     end
 
     put "/:id" do
-      binding_id = params[:id]
-      service_id = JSON.parse(request.body.read)["service_instance_id"]
+      binding_id  = params[:id]
+      service_id  = JSON.parse(request.body.read)["service_instance_id"]
+      bucket_uuid = get_bucket_uuid(service_id)
 
       unless already_bound?(binding_id)
-        bucket_uuid = SecureRandom.uuid
-
-        create_binding(binding_id, service_id, bucket_uuid)
+        create_binding(binding_id, service_id)
         status 201
 
         {
