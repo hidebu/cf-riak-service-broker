@@ -22,6 +22,7 @@ module RiakBroker
     end
 
     put "/:id" do
+p "===== START bindings put ====="
       binding_id  = params[:id]
       service_id  = JSON.parse(request.body.read)["service_instance_id"]
 
@@ -40,9 +41,11 @@ module RiakBroker
       else
         status 409
       end
+p "===== END bindings put ====="
     end
 
     delete "/:id" do
+p "===== START bindings delete ====="
       binding_id = params[:id]
 
       if already_bound?(binding_id)
@@ -54,5 +57,6 @@ module RiakBroker
 
       {}.to_json
     end
+p "===== END bindings delete ====="
   end
 end

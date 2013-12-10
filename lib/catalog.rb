@@ -9,6 +9,7 @@ module RiakBroker
     end
 
     get "/" do
+puts("==================== catalog.rb:Catalog Class:get Method")
       {
         "services" => [
           "id" => RIAK_SERVICE_ID,
